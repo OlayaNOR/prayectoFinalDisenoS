@@ -38,7 +38,7 @@ Patron de diseno: Patron Repository.
 
 Clonar este repositorio:
 
-git clone 
+git clone https://github.com/OlayaNOR/prayectoFinalDisenoS.git
 
 Configurar la base de datos en MySQL ejecutando el script database.sql.
 
