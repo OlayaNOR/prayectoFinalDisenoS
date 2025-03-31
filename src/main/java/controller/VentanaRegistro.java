@@ -4,17 +4,20 @@
  */
 package controller;
 
+import exception.InvalidEncargadoDataException;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import service.EncargadoService;
 
 
 public class VentanaRegistro extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaRegistro
-     */
+    private EncargadoService encargadoService;
+    
     public VentanaRegistro() {
         initComponents();
         setLocationRelativeTo(this);
+        encargadoService = new EncargadoService();
     }
 
     /**
@@ -176,42 +179,44 @@ public class VentanaRegistro extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void limpiarCampos(){
+        txtConfContr.setText("");
+        txtCont.setText("");
+        txtEmail.setText("");
+        txtID.setText("");
+        txtNombre.setText("");
+    }
+    
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
         // TODO add your handling code here:
-        String nombre = txtNombre.getText();
-        String id = txtID.getText();
-        String email = txtEmail.getText();
-        String contrasena = txtCont.getText();
-        String confirmarContrasena = txtConfContr.getText();
-        
-        if(nombre.isEmpty() || id.isEmpty() || email.isEmpty() || contrasena.isEmpty() || confirmarContrasena.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Rellene todos los campos.");
-            return;
-        }
-        
-        if(!(confirmarContrasena.equals(contrasena))){
-            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
-            return;
-        }
-        
-        /*
-        CAMPOS:
-        
-        Valeria
-        123456789
-        valeria@gmail.com
-        12345
-        12345
-        */
-        
-        if(nombre.equals("valeria") && id.equals("123456789") && email.equals("valeria@gmail.com") && contrasena.equals("12345") && confirmarContrasena.equals("12345")){
+        try{
+            String nombre = txtNombre.getText();
+            String id = txtID.getText();
+            String email = txtEmail.getText();
+            String contrasena = txtCont.getText();
+            String confirmarContrasena = txtConfContr.getText();
+
+            if(nombre.isEmpty() || id.isEmpty() || email.isEmpty() || contrasena.isEmpty() || confirmarContrasena.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Rellene todos los campos.");
+                return;
+            }
+
+            if(!(confirmarContrasena.equals(contrasena))){
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
+                return;
+            }
+
+            encargadoService.create(Integer.parseInt(id), nombre, email, contrasena);
             JOptionPane.showMessageDialog(null, "Registro exitoso.");
+            limpiarCampos();
+            VentanaLogin vtnL = new VentanaLogin();
+            vtnL.setVisible(true);
+            this.dispose();
+        }catch(SQLException | InvalidEncargadoDataException e){
+            e.getMessage();
         }
         
-        VentanaLogin vtnL = new VentanaLogin();
-        vtnL.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     /**
