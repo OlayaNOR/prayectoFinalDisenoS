@@ -4,10 +4,7 @@
  */
 package validator;
 
-/**
- *
- * @author nicolasolayarincon
- */
+
 public class EncargadoValidator {
     
     public static boolean validateName(String name) {

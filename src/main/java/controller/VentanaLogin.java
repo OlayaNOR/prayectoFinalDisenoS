@@ -7,16 +7,19 @@ package controller;
 import javax.swing.JOptionPane;
 import controller.VentanaAdmin;
 import controller.VentanaRegistro;
+import exception.InvalidEncargadoDataException;
+import java.sql.SQLException;
+import service.EncargadoService;
 
 
 public class VentanaLogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaLogin
-     */
+    EncargadoService encargadoService;
+    
     public VentanaLogin() {
         initComponents();
         setLocationRelativeTo(this);
+        encargadoService = new EncargadoService();
     }
 
     /**
@@ -152,25 +155,28 @@ public class VentanaLogin extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         // TODO add your handling code here:
-        String email = txtEmail.getText();
-        String contrasena = txtCont.getText();
-        
-        if(email.isEmpty() || contrasena.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Rellene todos los campos");
-            return;
-        }
-        //email: admin@gmail.com contrasena:12345
-        if(email.equals("admin@gmail.com") && contrasena.equals("12345")){
-            VentanaAdmin vtnA = new VentanaAdmin();
-            vtnA.setVisible(true);
-            this.dispose();
-        }
-        
-        //email: valeria@gmail.com contrasena:12345
-        if(email.equals("valeria@gmail.com") && contrasena.equals("12345")){
-            VentanaUsuario vu = new VentanaUsuario();
-            vu.setVisible(true);
-            this.dispose();
+        try{
+            String email = txtEmail.getText();
+            String contrasena = txtCont.getText();
+
+            if(email.isEmpty() || contrasena.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Rellene todos los campos");
+                return;
+            }
+            
+            if(email.equals("admin@gmail.com") && contrasena.equals("12345")){
+                VentanaAdmin vtnA = new VentanaAdmin();
+                vtnA.setVisible(true);
+                this.dispose();
+            }
+            
+            if(encargadoService.login(email, contrasena)){
+                VentanaUsuario vu = new VentanaUsuario();
+                vu.setVisible(true);
+                this.dispose();
+            }
+        }catch(SQLException | InvalidEncargadoDataException e){
+            e.getMessage();
         }
 
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
