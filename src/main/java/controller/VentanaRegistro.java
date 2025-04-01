@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dto.EncargadoDTO;
 import exception.InvalidEncargadoDataException;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ public class VentanaRegistro extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         encargadoService = new EncargadoService();
+        limpiarCampos();
     }
 
     /**
@@ -192,12 +194,12 @@ public class VentanaRegistro extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             String nombre = txtNombre.getText();
-            String id = txtID.getText();
+            String idTxt = txtID.getText();
             String email = txtEmail.getText();
             String contrasena = txtCont.getText();
             String confirmarContrasena = txtConfContr.getText();
 
-            if(nombre.isEmpty() || id.isEmpty() || email.isEmpty() || contrasena.isEmpty() || confirmarContrasena.isEmpty()){
+            if(nombre.isEmpty() || idTxt.isEmpty() || email.isEmpty() || contrasena.isEmpty() || confirmarContrasena.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Rellene todos los campos.");
                 return;
             }
@@ -206,13 +208,18 @@ public class VentanaRegistro extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
                 return;
             }
-
-            encargadoService.create(Integer.parseInt(id), nombre, email, contrasena);
-            JOptionPane.showMessageDialog(null, "Registro exitoso.");
-            limpiarCampos();
-            VentanaLogin vtnL = new VentanaLogin();
-            vtnL.setVisible(true);
-            this.dispose();
+            int id = Integer.parseInt(idTxt);
+            
+            if(encargadoService.create(id,nombre, email, contrasena)){
+                JOptionPane.showMessageDialog(null, "Registro exitoso.");
+                limpiarCampos();
+                VentanaLogin vtnL = new VentanaLogin();
+                vtnL.setVisible(true);
+                this.dispose();
+            }else{
+                JOptionPane.showConfirmDialog(null, "Algo salio mal.");
+            }
+            
         }catch(SQLException | InvalidEncargadoDataException e){
             e.getMessage();
         }

@@ -11,21 +11,27 @@ public class EncargadoService {
     
     private EncargadoRepository encargadoRepository = new EncargadoRepository();
     
-    public void create(int id, String nombre, String email, String contrasena) throws SQLException, InvalidEncargadoDataException {
+    public boolean create(int id, String nombre, String email, String contrasena) throws SQLException, InvalidEncargadoDataException {
         if (!EncargadoValidator.validateName(nombre) || !EncargadoValidator.validateEmail(email)) {
-            throw new InvalidEncargadoDataException("Invalid user data");
+            throw new InvalidEncargadoDataException("Datos invalidos.");
         }
         String hashedContrasena = hashPassword(contrasena);
-        EncargadoDTO encargado = new EncargadoDTO(id, nombre, email, hashedContrasena);
-        encargadoRepository.save(encargado);
+        return encargadoRepository.save(id, nombre, email, hashedContrasena);
+    }
+    
+    public boolean login(String email, String contrasena) throws SQLException, InvalidEncargadoDataException {
+        if (!EncargadoValidator.validateEmail(email)) {
+            throw new InvalidEncargadoDataException("Datos invalidos.");
+        }
+        return encargadoRepository.login(email, contrasena);
+    }
+    
+    public EncargadoDTO findByID(int id) throws SQLException{
+        return encargadoRepository.findById(id);
     }
     
     private static String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    private static boolean checkPassword(String password, String storedHash) {
-        return BCrypt.checkpw(password, storedHash);
-    }
-    
 }
