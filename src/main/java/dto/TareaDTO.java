@@ -48,11 +48,11 @@ public class TareaDTO {
         this.descripcion = descripcion;
     }
 
-    public EncargadoDTO getIdEncargado() {
+    public EncargadoDTO getEncargado() {
         return encargado;
     }
 
-    public void setIdEncargado(EncargadoDTO encargado) {
+    public void setEncargado(EncargadoDTO encargado) {
         this.encargado = encargado;
     }
 
