@@ -5,18 +5,23 @@
 
 package controller;
 
+import dto.NotificacionDTO;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import service.NotificacionService;
 
 
 public class VentanaNotificaciones extends javax.swing.JFrame {
 
-    /** Creates new form VentanaNotificaciones */
+    private NotificacionService notificacionService;
+    
     public VentanaNotificaciones() {
         initComponents();
         setLocationRelativeTo(this);
+        notificacionService = new NotificacionService();
         rellenarNotificaciones();
         verNotificacion();
     }
@@ -103,24 +108,30 @@ public class VentanaNotificaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
     
     private void rellenarNotificaciones(){
+        try{
+            DefaultTableModel model = new DefaultTableModel();
+            String[] columns = new String[3];
+            columns[0] = "DE";
+            columns[1] = "FECHA";
+            columns[2] = "MENSAJE";
+
+            model.setColumnIdentifiers(columns);
+            String[] rows = new String[3];
+            for (int i = 0; i < notificacionService.findByEncargadoID(1).size(); i++) {
+                NotificacionDTO noti = notificacionService.findByEncargadoID(1).get(i);
+                rows[0] = "admin@gmail.com";
+                rows[1] = "HOY";
+                rows[2] = noti.getMensaje();
+            }
+
+            model.addRow(rows);
+
+
+            tblNotificaciones.setModel(model);
+        }catch(SQLException e){
+            e.getMessage();
+        }
         
-        DefaultTableModel model = new DefaultTableModel();
-        String[] columns = new String[3];
-        columns[0] = "DE";
-        columns[1] = "FECHA";
-        columns[2] = "MENSAJE";
-        
-        model.setColumnIdentifiers(columns);
-        String[] rows = new String[3];
-        
-        rows[0] = "admin@gmail.com";
-        rows[1] = "01 - Marzo - 2025";
-        rows[2] = "Se le ha asignado una nueva tarea: Hacer ventana Usuario";
-        
-        model.addRow(rows);
-        
-    
-        tblNotificaciones.setModel(model);
     }
     
     private void verNotificacion(){
