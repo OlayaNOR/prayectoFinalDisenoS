@@ -238,23 +238,26 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
         
     }
     
-    private void verTareaHaciendo(){
-        
+    private void verTareaHaciendo() {
         tblHaciendo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int row = tblHaciendo.getSelectedRow(); 
-                if (row != -1) { 
-                    String mensaje = tblHaciendo.getValueAt(row, 0).toString();
+                int row = tblHaciendo.getSelectedRow();
+                if (row != -1) {
+                    try {
+                        String mensaje = tblHaciendo.getValueAt(row, 0).toString();
+                        TareaDTO tarea = tareaService.getTarea(encargado.getId(), mensaje);
 
-                    JOptionPane.showMessageDialog(null, mensaje);
-                    VentanaCambioEstado vce = new VentanaCambioEstado(encargado);
-                    vce.setVisible(true);
-                }           
-        }
-        
+                        JOptionPane.showMessageDialog(null, mensaje);
+                        VentanaCambioEstado vce = new VentanaCambioEstado(encargado, tarea);
+                        vce.setVisible(true);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace(); // Para depuración en consola
+                        JOptionPane.showMessageDialog(null, "Error al obtener la tarea: " + ex.getMessage());
+                    }
+                }
+            }
         });
-        
     }
     
     private void verTareaHecha(){
