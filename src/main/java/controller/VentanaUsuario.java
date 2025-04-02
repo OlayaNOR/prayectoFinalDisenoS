@@ -4,15 +4,17 @@
  */
 package controller;
 
+import dto.EncargadoDTO;
+import service.NotificacionService;
+
 
 public class VentanaUsuario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaUsuario
-     */
+    private NotificacionService notificacionService;
     public VentanaUsuario() {
         initComponents();
         setLocationRelativeTo(this);
+        notificacionService = new NotificacionService();
     }
 
     /**
@@ -107,6 +109,11 @@ public class VentanaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+//        EncargadoDTO encargado = notificacionService.findEncargadoByEmail(email);
+//        if(encargado.get){
+//        
+//        }
+        
         VentanaNotificaciones vn = new VentanaNotificaciones();
         vn.setVisible(true);
         this.dispose();

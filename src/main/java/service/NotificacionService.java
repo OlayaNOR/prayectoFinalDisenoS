@@ -1,5 +1,6 @@
 package service;
 
+import dto.EncargadoDTO;
 import dto.NotificacionDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,10 +10,16 @@ public class NotificacionService {
     
     private NotificacionRepository notificacionRepository = new NotificacionRepository();
     
-    public ArrayList<NotificacionDTO> findByEncargadoID(int idEncargado) throws SQLException{
+    public ArrayList<NotificacionDTO> findByEncargadoID(int idEncargado)throws SQLException{
         return notificacionRepository.findByEncargadoID(idEncargado);
     }
     
+    public EncargadoDTO findEncargado(int id)  throws SQLException{
+        return notificacionRepository.findEncargado(id);
+    }
     
+    public EncargadoDTO findEncargadoByEmail(String email) throws SQLException{
+        return notificacionRepository.findEncargadoByEmail(email);
+    }
     
 }
