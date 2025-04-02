@@ -4,16 +4,17 @@
  */
 package controller;
 
+import dto.EncargadoDTO;
 import javax.swing.JOptionPane;
 
 public class VentanaCambioEstado extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaCambioEstado
-     */
-    public VentanaCambioEstado() {
+    private EncargadoDTO encargado;
+    
+    public VentanaCambioEstado(EncargadoDTO encargado) {
         initComponents();
         setLocationRelativeTo(this);
+        this.encargado = encargado;
     }
 
     /**
@@ -188,7 +189,7 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
                 "\n TIEMPO ESTIMADO: 6 HORAS " + "\n TIEMPO USADO: 5 HORAS " +
                 "\n COMENTARIOS: COMENTARIOS ");
         
-        VentanaGestionTareasUsuario vgt = new VentanaGestionTareasUsuario();
+        VentanaGestionTareasUsuario vgt = new VentanaGestionTareasUsuario(encargado);
         vgt.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

@@ -18,8 +18,5 @@ public class NotificacionService {
         return notificacionRepository.findEncargado(id);
     }
     
-    public EncargadoDTO findEncargadoByEmail(String email) throws SQLException{
-        return notificacionRepository.findEncargadoByEmail(email);
-    }
     
 }

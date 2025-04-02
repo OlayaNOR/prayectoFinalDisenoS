@@ -30,6 +30,10 @@ public class EncargadoService {
         return encargadoRepository.findById(id);
     }
     
+    public EncargadoDTO findByEmail(String email) throws SQLException{
+        return encargadoRepository.findByEmail(email);
+    }
+    
     private static String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }

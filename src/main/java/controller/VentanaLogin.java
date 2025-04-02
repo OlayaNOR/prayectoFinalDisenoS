@@ -168,12 +168,12 @@ public class VentanaLogin extends javax.swing.JFrame {
                 VentanaAdmin vtnA = new VentanaAdmin();
                 vtnA.setVisible(true);
                 this.dispose();
-            }
-            
-            if(encargadoService.login(email, contrasena)){
-                VentanaUsuario vu = new VentanaUsuario();
+            }else if(encargadoService.login(email, contrasena)){
+                VentanaUsuario vu = new VentanaUsuario(encargadoService.findByEmail(email));
                 vu.setVisible(true);
                 this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Email o contrasena equivocados.");
             }
         }catch(SQLException | InvalidEncargadoDataException e){
             e.getMessage();

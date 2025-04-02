@@ -4,16 +4,17 @@
  */
 package controller;
 
+import dto.EncargadoDTO;
 import javax.swing.JOptionPane;
 
 public class VentanaAsignarTiempo extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaAsignarTiempo
-     */
-    public VentanaAsignarTiempo() {
+    private EncargadoDTO encargado;
+    
+    public VentanaAsignarTiempo(EncargadoDTO encargado) {
         initComponents();
         setLocationRelativeTo(this);
+        this.encargado = encargado;
     }
 
     /**
@@ -102,9 +103,9 @@ public class VentanaAsignarTiempo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addGap(41, 41, 41)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -137,7 +138,7 @@ public class VentanaAsignarTiempo extends javax.swing.JFrame {
         }
         
         JOptionPane.showMessageDialog(null, "Tiempo estimado exitosamente");
-        VentanaGestionTareasUsuario vg = new VentanaGestionTareasUsuario();
+        VentanaGestionTareasUsuario vg = new VentanaGestionTareasUsuario(encargado);
         vg.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTiempoActionPerformed

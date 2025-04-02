@@ -29,11 +29,34 @@ public class EncargadoRepository {
             }
         }
     }
+    
+    public EncargadoDTO findByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM encargados WHERE email LIKE ?";
+
+        try (Connection connection = DbConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, email);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new EncargadoDTO(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nombre"),
+                        resultSet.getString("email"),
+                        resultSet.getString("contrasena")
+                    );
+                }
+            }
+        }
+
+        return null; 
+    }
 
     public static boolean save(int id, String nombre, String email, String contrasena) {
         String query = "INSERT INTO encargados (id, nombre, email, contrasena) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyectoDiseno", "root", "Nico2707*");
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection connection = DbConfig.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
 
             ps.setInt(1, id);
             ps.setString(2, nombre);
@@ -60,7 +83,6 @@ public class EncargadoRepository {
 
             if (rs.next()) {
                 String storedPasswordHash = rs.getString("contrasena");
-                //System.out.println(storedPasswordHash);
                 return checkPassword(contrasena, storedPasswordHash);
             }
 
