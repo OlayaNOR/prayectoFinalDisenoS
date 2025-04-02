@@ -6,24 +6,25 @@ public class TareaDTO {
     private String descripcion;
     private EncargadoDTO encargado;
     private String prioridad;
-    private int tiempoEstimado;
+    private String tiempoEstimado;
     private String comentarios;
+    private String estado;
 
     public TareaDTO() {
     }
 
     public TareaDTO(int id, String titulo, String descripcion, EncargadoDTO encargado, 
-                   String prioridad, int tiempoEstimado, String comentarios) {
+                   String prioridad, String comentarios, String estado) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.encargado = encargado;
         this.prioridad = prioridad;
-        this.tiempoEstimado = tiempoEstimado;
+        this.tiempoEstimado = "";
         this.comentarios = comentarios;
+        this.estado = estado;
     }
 
-    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -64,11 +65,11 @@ public class TareaDTO {
         this.prioridad = prioridad;
     }
 
-    public int getTiempoEstimado() {
+    public String getTiempoEstimado() {
         return tiempoEstimado;
     }
 
-    public void setTiempoEstimado(int tiempoEstimado) {
+    public void setTiempoEstimado(String tiempoEstimado) {
         this.tiempoEstimado = tiempoEstimado;
     }
 
@@ -79,4 +80,13 @@ public class TareaDTO {
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 }

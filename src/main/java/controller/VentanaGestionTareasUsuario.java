@@ -5,27 +5,32 @@
 package controller;
 
 import dto.EncargadoDTO;
+import dto.TareaDTO;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import service.TareaService;
 
 
 public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
 
-    
+    private TareaService tareaService;
     private EncargadoDTO encargado;
     
     public VentanaGestionTareasUsuario(EncargadoDTO encargado) {
         initComponents();
         setLocationRelativeTo(this);
+        tareaService = new TareaService();
+        this.encargado = encargado;
         rellenarPorHacer();
         rellenarHechas();
         rellenarHaciendo();
         verTareaHaciendo();
         verTareaHecha();
         verTareaPorHacer();
-        this.encargado = encargado;
+        
     }
 
     /**
@@ -146,54 +151,72 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAtrasActionPerformed
 
     private void rellenarPorHacer(){
-        
-        DefaultTableModel model = new DefaultTableModel();
-        String[] columns = new String[1];
-        columns[0] = "NUEVO";
-        
-        model.setColumnIdentifiers(columns);
-        String[] rows = new String[1];
-        
-        rows[0] = "Realizar ventana Usuario";
+        try{
+            DefaultTableModel model = new DefaultTableModel();
+            String[] columns = new String[1];
+            columns[0] = "POR HACER";
 
-        model.addRow(rows);
+            model.setColumnIdentifiers(columns);
+            String[] rows = new String[1];
+
+            for (int i = 0; i < tareaService.findByEncargadoId(encargado.getId()).size(); i++) {
+                TareaDTO tarea = tareaService.findByEncargadoId(encargado.getId()).get(i);
+                if(tarea.getEstado().equals("Por hacer")){
+                    rows[0] = tarea.getTitulo();
+                    model.addRow(rows);
+                }
+            }
+            tblPorHacer.setModel(model);
+        }catch(SQLException e){
+            e.getMessage();
+        }
         
-    
-        tblPorHacer.setModel(model);
     }
     
     private void rellenarHaciendo(){
-        
-        DefaultTableModel model = new DefaultTableModel();
-        String[] columns = new String[1];
-        columns[0] = "EN PROGRESO";
-        
-        model.setColumnIdentifiers(columns);
-        String[] rows = new String[1];
-        
-        rows[0] = "Realizar login";
+        try{
+            DefaultTableModel model = new DefaultTableModel();
+            String[] columns = new String[1];
+            columns[0] = "HACIENDO";
 
-        model.addRow(rows);
+            model.setColumnIdentifiers(columns);
+            String[] rows = new String[1];
+
+            for (int i = 0; i < tareaService.findByEncargadoId(encargado.getId()).size(); i++) {
+                TareaDTO tarea = tareaService.findByEncargadoId(encargado.getId()).get(i);
+                if(tarea.getEstado().equals("Haciendo")){
+                    rows[0] = tarea.getTitulo();
+                    model.addRow(rows);
+                }
+            }
+            tblHaciendo.setModel(model);
+        }catch(SQLException e){
+            e.getMessage();
+        }
         
-    
-        tblHaciendo.setModel(model);
     }
     
     private void rellenarHechas(){
-        
-        DefaultTableModel model = new DefaultTableModel();
-        String[] columns = new String[1];
-        columns[0] = "FINALIZADO";
-        
-        model.setColumnIdentifiers(columns);
-        String[] rows = new String[1];
-        
-        rows[0] = "Crear repo";
+        try{
+            DefaultTableModel model = new DefaultTableModel();
+            String[] columns = new String[1];
+            columns[0] = "HECHAS";
 
-        model.addRow(rows);
+            model.setColumnIdentifiers(columns);
+            String[] rows = new String[1];
+
+            for (int i = 0; i < tareaService.findByEncargadoId(encargado.getId()).size(); i++) {
+                TareaDTO tarea = tareaService.findByEncargadoId(encargado.getId()).get(i);
+                if(tarea.getEstado().equals("Hechas")){
+                    rows[0] = tarea.getTitulo();
+                    model.addRow(rows);
+                }
+            }
+            tblHechas.setModel(model);
+        }catch(SQLException e){
+            e.getMessage();
+        }
         
-    
-        tblHechas.setModel(model);
     }
     
     private void verTareaPorHacer(){
