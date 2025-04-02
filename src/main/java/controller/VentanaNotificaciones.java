@@ -117,14 +117,22 @@ public class VentanaNotificaciones extends javax.swing.JFrame {
 
             model.setColumnIdentifiers(columns);
             String[] rows = new String[3];
+            
+            if(notificacionService.findByEncargadoID(1) == null){
+                JOptionPane.showMessageDialog(null, "No tienes notificaciones en el momento.");
+                return;
+            }
+            
             for (int i = 0; i < notificacionService.findByEncargadoID(1).size(); i++) {
                 NotificacionDTO noti = notificacionService.findByEncargadoID(1).get(i);
                 rows[0] = "admin@gmail.com";
-                rows[1] = "HOY";
+                rows[1] = noti.getFecha().toString();
                 rows[2] = noti.getMensaje();
+                
+                model.addRow(rows);
             }
 
-            model.addRow(rows);
+            
 
 
             tblNotificaciones.setModel(model);

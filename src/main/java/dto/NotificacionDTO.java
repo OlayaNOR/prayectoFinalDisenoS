@@ -1,9 +1,12 @@
 package dto;
 
+import java.time.LocalDate;
+
 public class NotificacionDTO {
     private int id;
     private String mensaje;
     private EncargadoDTO encargado;
+    private LocalDate fecha;
 
     public NotificacionDTO() {
     }
@@ -12,6 +15,7 @@ public class NotificacionDTO {
         this.id = id;
         this.mensaje = mensaje;
         this.encargado = encargado;
+        fecha = LocalDate.now();
     }
 
     public int getId() {
@@ -36,6 +40,10 @@ public class NotificacionDTO {
 
     public void setEncargado(EncargadoDTO encargado) {
         this.encargado = encargado;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
     }
     
 }
