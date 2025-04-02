@@ -14,13 +14,13 @@ public class TareaDTO {
     }
 
     public TareaDTO(int id, String titulo, String descripcion, EncargadoDTO encargado, 
-                   String prioridad, String comentarios, String estado) {
+                   String prioridad, String tiempoEstimado,String comentarios, String estado) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.encargado = encargado;
         this.prioridad = prioridad;
-        this.tiempoEstimado = "";
+        this.tiempoEstimado = tiempoEstimado;
         this.comentarios = comentarios;
         this.estado = estado;
     }

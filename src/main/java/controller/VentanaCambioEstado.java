@@ -5,16 +5,23 @@
 package controller;
 
 import dto.EncargadoDTO;
+import dto.TareaDTO;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import service.TareaService;
 
 public class VentanaCambioEstado extends javax.swing.JFrame {
 
     private EncargadoDTO encargado;
+    private TareaService tareaService;
+    private TareaDTO tarea;
     
-    public VentanaCambioEstado(EncargadoDTO encargado) {
+    public VentanaCambioEstado(EncargadoDTO encargado, TareaDTO tarea) {
         initComponents();
         setLocationRelativeTo(this);
         this.encargado = encargado;
+        this.tarea = tarea;
+        tareaService = new TareaService();
     }
 
     /**
@@ -45,7 +52,7 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Actualizar Tarea"));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Realizar login");
 
         jLabel4.setText("Alta");
@@ -97,19 +104,19 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(47, 47, 47)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(11, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -155,7 +162,7 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -183,18 +190,21 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(null, "REPORTE" + "\n TAREA FINALIZADA CON ÉXITO" +
-                "\n REALIZAR LOGIN " + "\n DESCRIPCIÓN: HACIENDO USO DE JAVA SWING " + "REALIZAR UNA VENTANA QUE PERMITA LOGEARSE " 
-                + "\n PRIORIDAD: ALTA" +
-                "\n TIEMPO ESTIMADO: 6 HORAS " + "\n TIEMPO USADO: 5 HORAS " +
-                "\n COMENTARIOS: COMENTARIOS ");
         
-        VentanaGestionTareasUsuario vgt = new VentanaGestionTareasUsuario(encargado);
-        vgt.setVisible(true);
-        this.dispose();
+        try{
+            tareaService.reportePDF(tareaService.reporteIA(encargado.getId(), tarea), encargado.getId(), tarea);
+
+            VentanaGestionTareasUsuario vgt = new VentanaGestionTareasUsuario(encargado);
+            vgt.setVisible(true);
+            this.dispose();
+        }catch(SQLException e){
+            e.getMessage();
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

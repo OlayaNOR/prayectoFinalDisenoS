@@ -18,5 +18,16 @@ public class TareaService {
         return tareaRepository.findEncargado(id);
     }
     
+    public TareaDTO getTarea(int idEncargado, String titulo) throws SQLException{
+        return tareaRepository.getTarea(idEncargado, titulo);
+    }
+    
+    public String reporteIA(int idEncargado, TareaDTO tarea)throws SQLException{
+        return tareaRepository.reporteIA(idEncargado, tarea);
+    }
+    
+    public void reportePDF(String reporteIA, int idEncargado, TareaDTO tarea)throws SQLException{
+        tareaRepository.reportePDF(reporteIA, idEncargado, tarea);
+    }
     
 }
