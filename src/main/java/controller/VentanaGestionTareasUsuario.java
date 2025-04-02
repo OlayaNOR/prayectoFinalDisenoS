@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dto.EncargadoDTO;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
@@ -12,10 +13,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaGestionTareasUsuario
-     */
-    public VentanaGestionTareasUsuario() {
+    
+    private EncargadoDTO encargado;
+    
+    public VentanaGestionTareasUsuario(EncargadoDTO encargado) {
         initComponents();
         setLocationRelativeTo(this);
         rellenarPorHacer();
@@ -24,6 +25,7 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
         verTareaHaciendo();
         verTareaHecha();
         verTareaPorHacer();
+        this.encargado = encargado;
     }
 
     /**
@@ -138,7 +140,7 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-        VentanaUsuario vu = new VentanaUsuario();
+        VentanaUsuario vu = new VentanaUsuario(encargado);
         vu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
@@ -204,7 +206,7 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
                     String mensaje = tblPorHacer.getValueAt(row, 0).toString();
 
                     JOptionPane.showMessageDialog(null, mensaje);
-                    VentanaAsignarTiempo vasig = new VentanaAsignarTiempo();
+                    VentanaAsignarTiempo vasig = new VentanaAsignarTiempo(encargado);
                     vasig.setVisible(true);                   
                 }          
         }
@@ -223,7 +225,7 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
                     String mensaje = tblHaciendo.getValueAt(row, 0).toString();
 
                     JOptionPane.showMessageDialog(null, mensaje);
-                    VentanaCambioEstado vce = new VentanaCambioEstado();
+                    VentanaCambioEstado vce = new VentanaCambioEstado(encargado);
                     vce.setVisible(true);
                 }           
         }

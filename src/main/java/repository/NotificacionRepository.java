@@ -49,22 +49,5 @@ public class NotificacionRepository {
         }
     }
     
-    public EncargadoDTO findEncargadoByEmail(String email) throws SQLException {
-        String query = "SELECT * FROM encargados WHERE email = " + email;
-        try (Connection connection = DbConfig.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            if (resultSet.next()) {
-                return new EncargadoDTO(
-                    resultSet.getInt("id"),
-                    resultSet.getString("nombre"),
-                    resultSet.getString("email"),
-                    resultSet.getString("contrasena")
-                );
-            } else {
-                return null;
-            }
-        }
-    }
     
 }

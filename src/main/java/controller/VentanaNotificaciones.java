@@ -5,6 +5,7 @@
 
 package controller;
 
+import dto.EncargadoDTO;
 import dto.NotificacionDTO;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,13 +18,16 @@ import service.NotificacionService;
 public class VentanaNotificaciones extends javax.swing.JFrame {
 
     private NotificacionService notificacionService;
+    private EncargadoDTO encargado;
     
-    public VentanaNotificaciones() {
+    public VentanaNotificaciones(EncargadoDTO encargado) {
         initComponents();
         setLocationRelativeTo(this);
+        this.encargado = encargado;
         notificacionService = new NotificacionService();
         rellenarNotificaciones();
         verNotificacion();
+        
     }
 
     /** This method is called from within the constructor to
@@ -102,7 +106,7 @@ public class VentanaNotificaciones extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        VentanaUsuario vu = new VentanaUsuario();
+        VentanaUsuario vu = new VentanaUsuario(encargado);
         vu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
@@ -118,13 +122,8 @@ public class VentanaNotificaciones extends javax.swing.JFrame {
             model.setColumnIdentifiers(columns);
             String[] rows = new String[3];
             
-            if(notificacionService.findByEncargadoID(1) == null){
-                JOptionPane.showMessageDialog(null, "No tienes notificaciones en el momento.");
-                return;
-            }
-            
-            for (int i = 0; i < notificacionService.findByEncargadoID(1).size(); i++) {
-                NotificacionDTO noti = notificacionService.findByEncargadoID(1).get(i);
+            for (int i = 0; i < notificacionService.findByEncargadoID(encargado.getId()).size(); i++) {
+                NotificacionDTO noti = notificacionService.findByEncargadoID(encargado.getId()).get(i);
                 rows[0] = "admin@gmail.com";
                 rows[1] = noti.getFecha().toString();
                 rows[2] = noti.getMensaje();

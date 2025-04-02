@@ -5,15 +5,21 @@
 package controller;
 
 import dto.EncargadoDTO;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import service.NotificacionService;
+
 
 
 public class VentanaUsuario extends javax.swing.JFrame {
 
+    private EncargadoDTO encargado;
     private NotificacionService notificacionService;
-    public VentanaUsuario() {
+    
+    public VentanaUsuario(EncargadoDTO encargado) {
         initComponents();
         setLocationRelativeTo(this);
+        this.encargado = encargado;
         notificacionService = new NotificacionService();
     }
 
@@ -109,18 +115,23 @@ public class VentanaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        EncargadoDTO encargado = notificacionService.findEncargadoByEmail(email);
-//        if(encargado.get){
-//        
-//        }
-        
-        VentanaNotificaciones vn = new VentanaNotificaciones();
-        vn.setVisible(true);
-        this.dispose();
+        try{
+            if(notificacionService.findByEncargadoID(encargado.getId()) == null){
+                JOptionPane.showMessageDialog(null, "No tienes notificaciones en el momento.");
+                return;
+            }else{
+                VentanaNotificaciones vn = new VentanaNotificaciones(encargado);
+                vn.setVisible(true);
+                this.dispose();
+            }
+        }catch(SQLException e){
+            e.getMessage();
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        VentanaGestionTareasUsuario vgt = new VentanaGestionTareasUsuario();
+        VentanaGestionTareasUsuario vgt = new VentanaGestionTareasUsuario(encargado);
         vgt.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed

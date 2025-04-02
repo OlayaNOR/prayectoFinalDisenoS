@@ -209,6 +209,16 @@ public class VentanaRegistro extends javax.swing.JFrame {
                 return;
             }
             int id = Integer.parseInt(idTxt);
+ 
+            
+            EncargadoDTO aux = encargadoService.findByID(id);
+            
+            if(aux != null){
+                JOptionPane.showMessageDialog(null, "Ya hay un encargado con este ID registrado.");
+                return;
+            }
+            
+            
             
             if(encargadoService.create(id,nombre, email, contrasena)){
                 JOptionPane.showMessageDialog(null, "Registro exitoso.");
@@ -217,7 +227,7 @@ public class VentanaRegistro extends javax.swing.JFrame {
                 vtnL.setVisible(true);
                 this.dispose();
             }else{
-                JOptionPane.showConfirmDialog(null, "Algo salio mal.");
+                JOptionPane.showMessageDialog(null, "Algo salio mal.");
             }
             
         }catch(SQLException | InvalidEncargadoDataException e){
