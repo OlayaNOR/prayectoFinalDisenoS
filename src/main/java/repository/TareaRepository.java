@@ -134,6 +134,24 @@ public class TareaRepository {
         }
     }
     
+    public static boolean saveNotificacion(int id, String mensaje, int idEncargado) {
+        String query = "INSERT INTO notificaciones (id, mensaje, id_encargado, fecha) VALUES (?, ?, ?, ?)";
+        try (Connection connection = DbConfig.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setInt(1, id);
+            ps.setString(2, mensaje);
+            ps.setInt(3, idEncargado);
+            ps.setString(4, LocalDate.now().toString());
+
+            int result = ps.executeUpdate();
+            return result > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     
     public ArrayList<TareaDTO> obtenerTareas() throws SQLException {
         ArrayList<TareaDTO> tareas = new ArrayList<>();
