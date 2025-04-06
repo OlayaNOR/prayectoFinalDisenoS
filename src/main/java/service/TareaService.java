@@ -16,12 +16,34 @@ public class TareaService {
         return tareaRepository.findByEncargadoID(idEncargado);
     }
     
+    public ArrayList<EncargadoDTO> obtenerEncargados() throws SQLException {
+        return tareaRepository.obtenerEncargados();
+    }
+    
     public EncargadoDTO findEncargado(int id)  throws SQLException{
         return tareaRepository.findEncargado(id);
     }
     
     public TareaDTO getTarea(int idEncargado, String titulo) throws SQLException{
         return tareaRepository.getTarea(idEncargado, titulo);
+    }
+    
+    public boolean create(int id, String titulo, String descripcion, int idEncargado, String prioridad, 
+            String tiempoEstimado, String comentarios, String estado) throws SQLException, InvalidTareaDataException {
+        
+        if (!TareaValidator.validateTitulo(titulo) || !TareaValidator.validateDescripcion(descripcion) || !TareaValidator.validatePrioridad(prioridad)) {
+            throw new InvalidTareaDataException("Datos incompletos");
+        }
+        
+        return tareaRepository.save(id, titulo, descripcion, idEncargado, prioridad, tiempoEstimado, comentarios, estado);
+    }
+    
+    public ArrayList<TareaDTO> obtenerTareas() throws SQLException {
+        return tareaRepository.obtenerTareas();
+    }
+    
+    public TareaDTO findByTitulo(String titulo) throws SQLException{
+        return tareaRepository.findByTitulo(titulo);
     }
     
     public String reporteIA(int idEncargado, TareaDTO tarea)throws SQLException{

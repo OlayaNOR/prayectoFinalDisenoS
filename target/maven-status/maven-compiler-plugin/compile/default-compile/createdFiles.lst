@@ -13,6 +13,7 @@ service\EncargadoService.class
 controller\VentanaNotificaciones$1.class
 controller\VentanaGestionTareasAdmin$2.class
 controller\VentanaNuevaTareaAdmin$1.class
+exception\InvalidTareaDataException.class
 repository\EncargadoRepository.class
 controller\VentanaCambioEstado$2.class
 dbconfig\DbConfig.class
@@ -46,4 +47,5 @@ controller\VentanaNuevaTareaAdmin$2.class
 main\java\eam\disenosoftware\proyectodisenos\ProyectoDisenoS.class
 controller\VentanaAsignarTiempo.class
 controller\VentanaRegistro.class
+validator\TareaValidator.class
 exception\InvalidEncargadoDataException.class

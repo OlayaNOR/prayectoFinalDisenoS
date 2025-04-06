@@ -43,10 +43,10 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnFinalizarTarea = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtComentarios = new javax.swing.JTextArea();
-        jButton2 = new javax.swing.JButton();
+        btnComentario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,10 +75,10 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Comentarios:");
 
-        jButton1.setText("FINALIZAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnFinalizarTarea.setText("FINALIZAR");
+        btnFinalizarTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnFinalizarTareaActionPerformed(evt);
             }
         });
 
@@ -86,10 +86,10 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
         txtComentarios.setRows(5);
         jScrollPane1.setViewportView(txtComentarios);
 
-        jButton2.setText("AGREGAR COMENTARIO");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnComentario.setText("AGREGAR COMENTARIO");
+        btnComentario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnComentarioActionPerformed(evt);
             }
         });
 
@@ -102,7 +102,7 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
+                            .addComponent(btnFinalizarTarea)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -128,7 +128,7 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jButton2))
+                                        .addComponent(btnComentario))
                                     .addComponent(jScrollPane1))
                                 .addGap(11, 11, 11))))))
         );
@@ -141,7 +141,7 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1)))
+                        .addComponent(btnFinalizarTarea)))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -161,7 +161,7 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnComentario)
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -179,7 +179,7 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComentarioActionPerformed
         String comentario = txtComentarios.getText();
         
         if (comentario.isEmpty()) {
@@ -187,9 +187,9 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Comentario agregado exitosamente");
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnComentarioActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnFinalizarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarTareaActionPerformed
         
         try{
             tareaService.reportePDF(tareaService.reporteIA(encargado.getId(), tarea), encargado.getId(), tarea);
@@ -201,13 +201,13 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
             e.getMessage();
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnFinalizarTareaActionPerformed
 
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnComentario;
+    private javax.swing.JButton btnFinalizarTarea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

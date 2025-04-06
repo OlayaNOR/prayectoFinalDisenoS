@@ -50,5 +50,10 @@ public class EncargadoDTO {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
     
 }

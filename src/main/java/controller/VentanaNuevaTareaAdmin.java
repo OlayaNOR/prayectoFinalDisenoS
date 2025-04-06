@@ -4,9 +4,16 @@
  */
 package controller;
 
+import dto.EncargadoDTO;
+import exception.InvalidTareaDataException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import service.TareaService;
 
 public class VentanaNuevaTareaAdmin extends javax.swing.JFrame {
+    
+    private TareaService tareaService;
 
     /**
      * Creates new form VentanaNuevaTareaAdmin
@@ -14,8 +21,16 @@ public class VentanaNuevaTareaAdmin extends javax.swing.JFrame {
     public VentanaNuevaTareaAdmin() {
         initComponents();
         setLocationRelativeTo(this);
+        tareaService = new TareaService();
+        limpiarCampos();
+        cargarComboEncargado();
     }
 
+    private void limpiarCampos(){
+        txtTitulo.setText("");
+        txtDescripcion.setText("");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,8 +76,6 @@ public class VentanaNuevaTareaAdmin extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtDescripcion);
 
         jLabel3.setText("Encargado:");
-
-        cbxEncargado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opcion:", "valeria@gmail.com" }));
 
         jLabel4.setText("Prioridad:");
 
@@ -162,19 +175,58 @@ public class VentanaNuevaTareaAdmin extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        String titulo = txtTitulo.getText();
-        String descripcion = txtDescripcion.getText();
-        String encargado = cbxEncargado.getSelectedItem().toString();
-        String prioridad = cbxPrioridad.getSelectedItem().toString();
+        try {
+            String titulo = txtTitulo.getText();
+            String descripcion = txtDescripcion.getText();
+            String prioridad = cbxPrioridad.getSelectedItem().toString();
+            String estado = "POR HACER";
+            
+            EncargadoDTO enc = null;
+            ArrayList<EncargadoDTO> encargados = tareaService.obtenerEncargados();
+            if (encargados != null) {
+                for (EncargadoDTO encargado : encargados) {
+                    if (cbxEncargado.getSelectedItem().equals(encargado.getNombre())) {
+                        enc = encargado;
+                    }
+                }
+            }
+                       
+            int idEncargado = enc.getId();
+
+            if(titulo.isEmpty() || descripcion.isEmpty() || enc.equals("Seleccione una opcion:") || 
+                    prioridad.equals("Seleccione una opcion:")){
+                JOptionPane.showMessageDialog(null, "Rellene todos los campos.");
+                return;
+            }
         
-        if(titulo.isEmpty() || descripcion.isEmpty() || encargado.equals("Seleccione una opcion:") || prioridad.equals("Seleccione una opcion:")){
-            JOptionPane.showMessageDialog(null, "Rellene todos los campos.");
-            return;
+            if (tareaService.create(0, titulo, descripcion, idEncargado, prioridad, "", "", estado)) {
+                JOptionPane.showMessageDialog(null, "Tarea creada exitosamente.");
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "Algo salió mal.");
+            }
+  
+        }catch(SQLException | InvalidTareaDataException e) {
+            e.getMessage();
         }
-        
-        JOptionPane.showMessageDialog(null, "Tarea creada exitosamente.");
     }//GEN-LAST:event_btnCrearActionPerformed
 
+    
+    private void cargarComboEncargado() {
+        cbxEncargado.addItem("Seleccione una opcion:");
+        try {
+            ArrayList<EncargadoDTO> encargados = tareaService.obtenerEncargados();
+            if (encargados != null) {
+                for (EncargadoDTO encargado : encargados) {
+                cbxEncargado.addItem(encargado.getNombre());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay encargados registrados");
+            }
+        }catch(SQLException e) {
+            e.getMessage();
+        }
+    }
     /**
      * @param args the command line arguments
      */
