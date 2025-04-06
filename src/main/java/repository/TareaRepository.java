@@ -36,6 +36,26 @@ public class TareaRepository {
     private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static final Gson gson = new Gson();
     
+    public ArrayList<EncargadoDTO> obtenerEncargados() throws SQLException {
+        ArrayList<EncargadoDTO> encargados = new ArrayList<>();
+        String query = "SELECT id, nombre, email, contrasena FROM encargados";
+
+        try (Connection connection = DbConfig.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) { 
+                encargados.add(new EncargadoDTO(
+                    resultSet.getInt("id"), 
+                    resultSet.getString("nombre"),
+                    resultSet.getString("email"), 
+                    resultSet.getString("contrasena")    
+                ));
+            }
+        return encargados; 
+        }
+    }
+    
     public ArrayList<TareaDTO> findByEncargadoID(int idEncargado) throws SQLException {
         ArrayList<TareaDTO> tareas = new ArrayList<>();
         String query = "SELECT * FROM tareas WHERE id_encargado = " + idEncargado;

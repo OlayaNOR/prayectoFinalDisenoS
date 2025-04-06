@@ -121,9 +121,8 @@ public class VentanaAdmin extends javax.swing.JFrame {
 
     private void btnNuevaTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaTareaActionPerformed
         // TODO add your handling code here:
-        
-        VentanaNuevaTareaAdmin vtnNV = new VentanaNuevaTareaAdmin();
-        vtnNV.setVisible(true);
+        VentanaNuevaTareaAdmin vnta = new VentanaNuevaTareaAdmin();
+        vnta.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnNuevaTareaActionPerformed
 
