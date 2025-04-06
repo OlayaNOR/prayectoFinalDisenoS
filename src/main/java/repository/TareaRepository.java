@@ -133,6 +133,56 @@ public class TareaRepository {
         }
     }
     
+    public ArrayList<TareaDTO> obtenerTareas() throws SQLException {
+        ArrayList<TareaDTO> tareas = new ArrayList<>();
+        String query = "SELECT id, titulo, descripcion, id_encargado, prioridad, tiempo_estimado, comentarios, estado FROM tareas";
+
+        try (Connection connection = DbConfig.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) { 
+                tareas.add(new TareaDTO(
+                        resultSet.getInt("id"),
+                        resultSet.getString("titulo"),
+                        resultSet.getString("descripcion"),
+                        findEncargado(resultSet.getInt("id_encargado")),
+                        resultSet.getString("prioridad"),
+                        resultSet.getString("tiempo_estimado"),
+                        resultSet.getString("comentarios"),
+                        resultSet.getString("estado")
+                ));
+            }
+        return tareas; 
+        }
+    }
+    
+    public TareaDTO findByTitulo(String titulo) throws SQLException {
+        String query = "SELECT * FROM tareas WHERE titulo LIKE ?";
+
+        try (Connection connection = DbConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, titulo);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new TareaDTO(
+                        resultSet.getInt("id"),
+                        resultSet.getString("titulo"),
+                        resultSet.getString("descripcion"),
+                        findEncargado(resultSet.getInt("id_encargado")),
+                        resultSet.getString("prioridad"),
+                        resultSet.getString("tiempo_estimado"),
+                        resultSet.getString("comentarios"),
+                        resultSet.getString("estado")
+                    );
+                }
+            }
+        }
+        return null;
+    }
+    
     public EncargadoDTO findEncargado(int id) throws SQLException {
         String query = "SELECT * FROM encargados WHERE id = " + id;
         try (Connection connection = DbConfig.getConnection();

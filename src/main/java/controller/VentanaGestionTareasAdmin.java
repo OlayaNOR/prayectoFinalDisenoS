@@ -4,13 +4,18 @@
  */
 package controller;
 
+import dto.TareaDTO;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import service.TareaService;
 
 
 public class VentanaGestionTareasAdmin extends javax.swing.JFrame {
+    
+    private TareaService tareaService;
 
     /**
      * Creates new form VentanaGestionTareasAdmin
@@ -18,12 +23,13 @@ public class VentanaGestionTareasAdmin extends javax.swing.JFrame {
     public VentanaGestionTareasAdmin() {
         initComponents();
         setLocationRelativeTo(this);
+        tareaService = new TareaService();
         rellenarPorHacer();
         rellenarHechas();
         rellenarHaciendo();
+        verTareaPorHacer();
         verTareaHaciendo();
         verTareaHecha();
-        verTareaPorHacer();
     }
 
     /**
@@ -160,107 +166,153 @@ public class VentanaGestionTareasAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
     
     private void rellenarPorHacer(){
-        
-        DefaultTableModel model = new DefaultTableModel();
-        String[] columns = new String[1];
-        columns[0] = "POR HACER";
-        
-        model.setColumnIdentifiers(columns);
-        String[] rows = new String[1];
-        
-        rows[0] = "Hacer ventana Usuario";
-
-        model.addRow(rows);
-        
-    
-        tblPorHacer.setModel(model);
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            String[] columns = new String[1];
+            columns[0] = "POR HACER";
+            
+            model.setColumnIdentifiers(columns);
+            String[] rows = new String[1];
+            
+            for (int i = 0; i < tareaService.obtenerTareas().size(); i++) {
+                TareaDTO tarea = tareaService.obtenerTareas().get(i);
+                if(tarea.getEstado().equals("POR HACER")) {
+                    rows[0] = tarea.getTitulo();
+                    model.addRow(rows);
+                }
+            }
+            tblPorHacer.setModel(model);
+        }catch(SQLException e) {
+            e.getMessage();
+        }
     }
     
     private void rellenarHaciendo(){
-        
-        DefaultTableModel model = new DefaultTableModel();
-        String[] columns = new String[1];
-        columns[0] = "EN PROGRESO";
-        
-        model.setColumnIdentifiers(columns);
-        String[] rows = new String[1];
-        
-
-        //model.addRow(rows);
-        
-    
-        tblHaciendo.setModel(model);
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            String[] columns = new String[1];
+            columns[0] = "HACIENDO";
+            
+            model.setColumnIdentifiers(columns);
+            String[] rows = new String[1];
+            
+            for (int i = 0; i < tareaService.obtenerTareas().size(); i++) {
+                TareaDTO tarea = tareaService.obtenerTareas().get(i);
+                if(tarea.getEstado().equals("HACIENDO")) {
+                    rows[0] = tarea.getTitulo();
+                    model.addRow(rows);
+                }
+            }
+            tblHaciendo.setModel(model);
+        }catch(SQLException e) {
+            e.getMessage();
+        }
     }
     
     private void rellenarHechas(){
-        
-        DefaultTableModel model = new DefaultTableModel();
-        String[] columns = new String[1];
-        columns[0] = "FINALIZADO";
-        
-        model.setColumnIdentifiers(columns);
-        String[] rows = new String[1];
-        
-        rows[0] = "Crear repo";
-
-        model.addRow(rows);
-        
-    
-        tblHechas.setModel(model);
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            String[] columns = new String[1];
+            columns[0] = "REALIZADA";
+            
+            model.setColumnIdentifiers(columns);
+            String[] rows = new String[1];
+            
+            for (int i = 0; i < tareaService.obtenerTareas().size(); i++) {
+                TareaDTO tarea = tareaService.obtenerTareas().get(i);
+                if(tarea.getEstado().equals("REALIZADA")) {
+                    rows[0] = tarea.getTitulo();
+                    model.addRow(rows);
+                }
+            }
+            tblHechas.setModel(model);
+        }catch(SQLException e) {
+            e.getMessage();
+        }
     }
     
     private void verTareaPorHacer(){
-        
         tblPorHacer.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = tblPorHacer.getSelectedRow(); 
                 if (row != -1) { 
-                    String mensaje = tblPorHacer.getValueAt(row, 0).toString();
+                    String titulo = tblPorHacer.getValueAt(row, 0).toString();
+                    try {
+                        TareaDTO t = tareaService.findByTitulo(titulo);
+                        
+                        String mensaje = "TAREA POR HACER" + 
+                            "\n ID TAREA: " + t.getId() + 
+                            "\n TITULO: " + t.getTitulo() + 
+                            "\n DESCRIPCION: " + t.getDescripcion() +
+                            "\n ENCARGADO: " + t.getEncargado().getNombre() + 
+                            "\n PRIORIDAD: " + t.getPrioridad() +
+                            "\n TIEMPO ESTIMADO: " + t.getTiempoEstimado() + 
+                            "\n COMENTARIOS: " + t.getComentarios();
 
-                    JOptionPane.showMessageDialog(null, mensaje);
+                        JOptionPane.showMessageDialog(null, mensaje);
+                    }catch(SQLException ex) {
+                        ex.getMessage();
+                    }
                 }
-            
-        }
-        
+            }
         });
-        
     }
     
     private void verTareaHaciendo(){
-        
         tblHaciendo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = tblHaciendo.getSelectedRow(); 
                 if (row != -1) { 
-                    String mensaje = tblHaciendo.getValueAt(row, 0).toString();
+                    String titulo = tblHaciendo.getValueAt(row, 0).toString();
+                    try {
+                        TareaDTO t = tareaService.findByTitulo(titulo);
+                        
+                        String mensaje = "TAREA EN PROCESO" + 
+                            "\n ID TAREA: " + t.getId() + 
+                            "\n TITULO: " + t.getTitulo() + 
+                            "\n DESCRIPCION: " + t.getDescripcion() +
+                            "\n ENCARGADO: " + t.getEncargado().getNombre() + 
+                            "\n PRIORIDAD: " + t.getPrioridad() +
+                            "\n TIEMPO ESTIMADO: " + t.getTiempoEstimado() + 
+                            "\n COMENTARIOS: " + t.getComentarios();
 
-                    JOptionPane.showMessageDialog(null, mensaje);
+                        JOptionPane.showMessageDialog(null, mensaje);
+                    }catch(SQLException ex) {
+                        ex.getMessage();
+                    }
                 }
-            
-        }
-        
+            }
         });
-        
     }
     
     private void verTareaHecha(){
-        
         tblHechas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = tblHechas.getSelectedRow(); 
                 if (row != -1) { 
-                    String mensaje = tblHechas.getValueAt(row, 0).toString();
+                    String titulo = tblHechas.getValueAt(row, 0).toString();
+                    try {
+                        TareaDTO t = tareaService.findByTitulo(titulo);
+                        
+                        String mensaje = "TAREA REALIZADA" + 
+                            "\n ID TAREA: " + t.getId() + 
+                            "\n TITULO: " + t.getTitulo() + 
+                            "\n DESCRIPCION: " + t.getDescripcion() +
+                            "\n ENCARGADO: " + t.getEncargado().getNombre() + 
+                            "\n PRIORIDAD: " + t.getPrioridad() +
+                            "\n TIEMPO ESTIMADO: " + t.getTiempoEstimado() + 
+                            "\n COMENTARIOS: " + t.getComentarios();
 
-                    JOptionPane.showMessageDialog(null, mensaje);
+                        JOptionPane.showMessageDialog(null, mensaje);
+                    }catch(SQLException ex) {
+                        ex.getMessage();
+                    }
                 }
-            
-        }
-        
+            }
         });
-        
     }
     
     

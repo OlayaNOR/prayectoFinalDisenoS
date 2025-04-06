@@ -179,6 +179,7 @@ public class VentanaNuevaTareaAdmin extends javax.swing.JFrame {
             String titulo = txtTitulo.getText();
             String descripcion = txtDescripcion.getText();
             String prioridad = cbxPrioridad.getSelectedItem().toString();
+            String estado = "POR HACER";
             
             EncargadoDTO enc = null;
             ArrayList<EncargadoDTO> encargados = tareaService.obtenerEncargados();
@@ -198,7 +199,7 @@ public class VentanaNuevaTareaAdmin extends javax.swing.JFrame {
                 return;
             }
         
-            if (tareaService.create(0, titulo, descripcion, idEncargado, prioridad, "", "", "")) {
+            if (tareaService.create(0, titulo, descripcion, idEncargado, prioridad, "", "", estado)) {
                 JOptionPane.showMessageDialog(null, "Tarea creada exitosamente.");
                 limpiarCampos();
             } else {

@@ -128,7 +128,6 @@ public class VentanaAdmin extends javax.swing.JFrame {
 
     private void btnVerTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTareaActionPerformed
         // TODO add your handling code here:
-        
         VentanaGestionTareasAdmin vtnGT = new VentanaGestionTareasAdmin();
         vtnGT.setVisible(true);
         this.dispose();

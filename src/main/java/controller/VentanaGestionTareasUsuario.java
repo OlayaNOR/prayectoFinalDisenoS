@@ -25,12 +25,11 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
         tareaService = new TareaService();
         this.encargado = encargado;
         rellenarPorHacer();
-        rellenarHechas();
+        rellenarRealizada();
         rellenarHaciendo();
         verTareaHaciendo();
-        verTareaHecha();
-        verTareaPorHacer();
-        
+        verTareaRealizada();
+        verTareaPorHacer();        
     }
 
     /**
@@ -161,7 +160,7 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
 
             for (int i = 0; i < tareaService.findByEncargadoId(encargado.getId()).size(); i++) {
                 TareaDTO tarea = tareaService.findByEncargadoId(encargado.getId()).get(i);
-                if(tarea.getEstado().equals("Por hacer")){
+                if(tarea.getEstado().equals("POR HACER")){
                     rows[0] = tarea.getTitulo();
                     model.addRow(rows);
                 }
@@ -169,8 +168,7 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
             tblPorHacer.setModel(model);
         }catch(SQLException e){
             e.getMessage();
-        }
-        
+        }       
     }
     
     private void rellenarHaciendo(){
@@ -184,7 +182,7 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
 
             for (int i = 0; i < tareaService.findByEncargadoId(encargado.getId()).size(); i++) {
                 TareaDTO tarea = tareaService.findByEncargadoId(encargado.getId()).get(i);
-                if(tarea.getEstado().equals("Haciendo")){
+                if(tarea.getEstado().equals("HACIENDO")){
                     rows[0] = tarea.getTitulo();
                     model.addRow(rows);
                 }
@@ -192,22 +190,21 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
             tblHaciendo.setModel(model);
         }catch(SQLException e){
             e.getMessage();
-        }
-        
+        }       
     }
     
-    private void rellenarHechas(){
+    private void rellenarRealizada(){
         try{
             DefaultTableModel model = new DefaultTableModel();
             String[] columns = new String[1];
-            columns[0] = "HECHAS";
+            columns[0] = "REALIZADA";
 
             model.setColumnIdentifiers(columns);
             String[] rows = new String[1];
 
             for (int i = 0; i < tareaService.findByEncargadoId(encargado.getId()).size(); i++) {
                 TareaDTO tarea = tareaService.findByEncargadoId(encargado.getId()).get(i);
-                if(tarea.getEstado().equals("Hechas")){
+                if(tarea.getEstado().equals("REALIZADA")){
                     rows[0] = tarea.getTitulo();
                     model.addRow(rows);
                 }
@@ -219,8 +216,7 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
         
     }
     
-    private void verTareaPorHacer(){
-        
+    private void verTareaPorHacer(){       
         tblPorHacer.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -232,10 +228,8 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
                     VentanaAsignarTiempo vasig = new VentanaAsignarTiempo(encargado);
                     vasig.setVisible(true);                   
                 }          
-        }
-        
-        });
-        
+            }       
+        });       
     }
     
     private void verTareaHaciendo() {
@@ -260,26 +254,32 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
         });
     }
     
-    private void verTareaHecha(){
-        
+    private void verTareaRealizada(){       
         tblHechas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = tblHechas.getSelectedRow(); 
                 if (row != -1) { 
-//                    String mensaje = tblHechas.getValueAt(row, 0).toString();
-//
-//                    JOptionPane.showMessageDialog(null, mensaje);
-                    JOptionPane.showMessageDialog(null, "REPORTE" + "\n TAREA FINALIZADA CON ÉXITO" +
-                        "\n REALIZAR LOGIN " + "\n DESCRIPCIÓN: HACIENDO USO DE JAVA SWING " + 
-                        "REALIZAR UNA VENTANA QUE PERMITA LOGEARSE " + "\n PRIORIDAD: ALTA" + "\n ASIGNADO: VALERIA" +
-                        "\n TIEMPO ESTIMADO: 6 HORAS " + "\n TIEMPO USADO: 5 HORAS " + "\n COMENTARIOS: COMENTARIOS ");
-                }
-            
-        }
-        
-        });
-        
+                    String titulo = tblHechas.getValueAt(row, 0).toString();
+                    try {
+                        TareaDTO t = tareaService.findByTitulo(titulo);
+                        
+                        String mensaje = "TAREA REALIZADA" + 
+                            "\n ID TAREA: " + t.getId() + 
+                            "\n TITULO: " + t.getTitulo() + 
+                            "\n DESCRIPCION: " + t.getDescripcion() +
+                            "\n ENCARGADO: " + t.getEncargado().getNombre() + 
+                            "\n PRIORIDAD: " + t.getPrioridad() +
+                            "\n TIEMPO ESTIMADO: " + t.getTiempoEstimado() + 
+                            "\n COMENTARIOS: " + t.getComentarios();
+
+                        JOptionPane.showMessageDialog(null, mensaje);
+                    }catch(SQLException ex) {
+                        ex.getMessage();
+                    }
+                }            
+            }        
+        });       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

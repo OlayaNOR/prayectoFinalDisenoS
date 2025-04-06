@@ -38,6 +38,14 @@ public class TareaService {
         return tareaRepository.save(id, titulo, descripcion, idEncargado, prioridad, tiempoEstimado, comentarios, estado);
     }
     
+    public ArrayList<TareaDTO> obtenerTareas() throws SQLException {
+        return tareaRepository.obtenerTareas();
+    }
+    
+    public TareaDTO findByTitulo(String titulo) throws SQLException{
+        return tareaRepository.findByTitulo(titulo);
+    }
+    
     public String reporteIA(int idEncargado, TareaDTO tarea)throws SQLException{
         return tareaRepository.reporteIA(idEncargado, tarea);
     }
