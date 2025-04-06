@@ -26,8 +26,7 @@ public class VentanaNotificaciones extends javax.swing.JFrame {
         this.encargado = encargado;
         notificacionService = new NotificacionService();
         rellenarNotificaciones();
-        verNotificacion();
-        
+        verNotificacion();        
     }
 
     /** This method is called from within the constructor to
@@ -130,19 +129,13 @@ public class VentanaNotificaciones extends javax.swing.JFrame {
                 
                 model.addRow(rows);
             }
-
-            
-
-
             tblNotificaciones.setModel(model);
         }catch(SQLException e){
             e.getMessage();
-        }
-        
+        }        
     }
     
-    private void verNotificacion(){
-        
+    private void verNotificacion(){        
         tblNotificaciones.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -151,21 +144,11 @@ public class VentanaNotificaciones extends javax.swing.JFrame {
                     String mensaje = tblNotificaciones.getValueAt(row, 2).toString();
 
                     JOptionPane.showMessageDialog(null, mensaje);
-                }
-            
-        }
-        
-        });
-        
+                }           
+            }      
+        });        
     }
                 
-                
-    
-    
-    
-    
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JPanel jPanel1;
