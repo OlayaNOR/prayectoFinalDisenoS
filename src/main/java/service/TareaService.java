@@ -40,7 +40,12 @@ public class TareaService {
         return tareaRepository.save(id, titulo, descripcion, idEncargado, prioridad, tiempoEstimado, comentarios, estado);
     }
     
-    
+    public boolean createNotificacion(int id, String mensaje, int idEncargado) throws SQLException, InvalidNotificacionDataException {
+        if (!NotificacionValidator.validateMensaje(mensaje)) {
+            throw new InvalidNotificacionDataException("Datos Incompletos");
+        }
+        return tareaRepository.saveNotificacion(id, mensaje, idEncargado);
+    }
     
     public ArrayList<TareaDTO> obtenerTareas() throws SQLException {
         return tareaRepository.obtenerTareas();
