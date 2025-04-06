@@ -183,6 +183,41 @@ public class TareaRepository {
         return null;
     }
     
+    public boolean asignarTiempo(int id, String tiempoEstimado) throws SQLException {
+        String query = "UPDATE tareas SET tiempo_estimado = ?, estado = ? WHERE id = ?";
+            try (Connection connection = DbConfig.getConnection();
+                PreparedStatement ps = connection.prepareStatement(query)) {
+            
+            ps.setString(1, tiempoEstimado);
+            ps.setString(2, "HACIENDO");
+            ps.setInt(3, id);
+            
+            int result = ps.executeUpdate();
+            return result > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean agregarComentarios(int id, String comentarios) throws SQLException {
+        String query = "UPDATE tareas SET comentarios = ? WHERE id = ?";
+            try (Connection connection = DbConfig.getConnection();
+                PreparedStatement ps = connection.prepareStatement(query)) {
+            
+            ps.setString(1, comentarios);
+            ps.setInt(2, id);
+            
+            int result = ps.executeUpdate();
+            return result > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     public EncargadoDTO findEncargado(int id) throws SQLException {
         String query = "SELECT * FROM encargados WHERE id = " + id;
         try (Connection connection = DbConfig.getConnection();

@@ -46,6 +46,14 @@ public class TareaService {
         return tareaRepository.findByTitulo(titulo);
     }
     
+    public boolean asignarTiempo(int id, String tiempoEstimado) throws SQLException {
+        return tareaRepository.asignarTiempo(id, tiempoEstimado);
+    }
+    
+    public boolean agregarComentarios(int id, String comentarios) throws SQLException {
+        return tareaRepository.agregarComentarios(id, comentarios);
+    }
+    
     public String reporteIA(int idEncargado, TareaDTO tarea)throws SQLException{
         return tareaRepository.reporteIA(idEncargado, tarea);
     }

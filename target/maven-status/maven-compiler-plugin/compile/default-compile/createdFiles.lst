@@ -4,6 +4,7 @@ validator\EncargadoValidator.class
 controller\VentanaAdmin$2.class
 controller\VentanaGestionTareasUsuario$4.class
 controller\VentanaGestionTareasAdmin$1.class
+controller\VentanaCambioEstado$3.class
 controller\VentanaGestionTareasAdmin$5.class
 controller\VentanaGestionTareasUsuario.class
 controller\VentanaAsignarTiempo$1.class
@@ -16,7 +17,9 @@ controller\VentanaNuevaTareaAdmin$1.class
 exception\InvalidTareaDataException.class
 repository\EncargadoRepository.class
 controller\VentanaCambioEstado$2.class
+controller\VentanaRegistro$2.class
 dbconfig\DbConfig.class
+controller\VentanaAsignarTiempo$2.class
 controller\VentanaUsuario$3.class
 controller\VentanaAdmin$3.class
 controller\VentanaLogin$3.class

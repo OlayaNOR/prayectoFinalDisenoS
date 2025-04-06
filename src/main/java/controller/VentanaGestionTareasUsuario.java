@@ -222,11 +222,17 @@ public class VentanaGestionTareasUsuario extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 int row = tblPorHacer.getSelectedRow(); 
                 if (row != -1) { 
-                    String mensaje = tblPorHacer.getValueAt(row, 0).toString();
+                    try {
+                        String mensaje = tblPorHacer.getValueAt(row, 0).toString();
+                        TareaDTO tarea = tareaService.getTarea(encargado.getId(), mensaje);
 
-                    JOptionPane.showMessageDialog(null, mensaje);
-                    VentanaAsignarTiempo vasig = new VentanaAsignarTiempo(encargado);
-                    vasig.setVisible(true);                   
+                        JOptionPane.showMessageDialog(null, mensaje);
+                        VentanaAsignarTiempo vasig = new VentanaAsignarTiempo(encargado, tarea);
+                        vasig.setVisible(true);  
+                    } catch (SQLException ex) {
+                        ex.printStackTrace(); // Para depuración en consola
+                        JOptionPane.showMessageDialog(null, "Error al obtener la tarea: " + ex.getMessage());
+                    }
                 }          
             }       
         });       
