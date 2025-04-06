@@ -25,6 +25,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.FileOutputStream;
+import java.time.LocalDate;
 
 import javax.swing.*;
 
@@ -133,6 +134,7 @@ public class TareaRepository {
         }
     }
     
+    
     public ArrayList<TareaDTO> obtenerTareas() throws SQLException {
         ArrayList<TareaDTO> tareas = new ArrayList<>();
         String query = "SELECT id, titulo, descripcion, id_encargado, prioridad, tiempo_estimado, comentarios, estado FROM tareas";
@@ -218,6 +220,23 @@ public class TareaRepository {
         }
     }
     
+    public boolean cambiarEstado(int id) throws SQLException {
+        String query = "UPDATE tareas SET estado = ? WHERE id = ?";
+            try (Connection connection = DbConfig.getConnection();
+                PreparedStatement ps = connection.prepareStatement(query)) {
+            
+            ps.setString(1, "REALIZADA");
+            ps.setInt(2, id);
+            
+            int result = ps.executeUpdate();
+            return result > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     public EncargadoDTO findEncargado(int id) throws SQLException {
         String query = "SELECT * FROM encargados WHERE id = " + id;
         try (Connection connection = DbConfig.getConnection();
@@ -272,7 +291,7 @@ public class TareaRepository {
 
             // Crear documento
             Document document = new Document();
-            String filePath = System.getProperty("user.home") + "/desktop/reporte.pdf";
+            String filePath = System.getProperty("user.home") + "/OneDrive/Desktop/reporte.pdf";
             PdfWriter.getInstance(document, new FileOutputStream(filePath));
             document.open();
             document.add(new Paragraph(content));

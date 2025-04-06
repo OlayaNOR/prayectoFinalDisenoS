@@ -2,10 +2,12 @@ package service;
 
 import dto.EncargadoDTO;
 import dto.TareaDTO;
+import exception.InvalidNotificacionDataException;
 import exception.InvalidTareaDataException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import repository.TareaRepository;
+import validator.NotificacionValidator;
 import validator.TareaValidator;
 
 public class TareaService {
@@ -38,6 +40,8 @@ public class TareaService {
         return tareaRepository.save(id, titulo, descripcion, idEncargado, prioridad, tiempoEstimado, comentarios, estado);
     }
     
+    
+    
     public ArrayList<TareaDTO> obtenerTareas() throws SQLException {
         return tareaRepository.obtenerTareas();
     }
@@ -52,6 +56,10 @@ public class TareaService {
     
     public boolean agregarComentarios(int id, String comentarios) throws SQLException {
         return tareaRepository.agregarComentarios(id, comentarios);
+    }
+    
+    public boolean cambioEstado(int id) throws SQLException {
+        return tareaRepository.cambiarEstado(id);
     }
     
     public String reporteIA(int idEncargado, TareaDTO tarea)throws SQLException{
