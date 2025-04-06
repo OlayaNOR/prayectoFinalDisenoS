@@ -89,6 +89,30 @@ public class TareaRepository {
         return tarea;
     }
     
+    public static boolean save(int id, String titulo, String descripcion, int idEncargado, String prioridad, 
+            String tiempoEstimado, String comentarios, String estado) {
+        String query = "INSERT INTO tareas (id, titulo, descripcion, id_encargado, prioridad, tiempo_estimado, comentarios, estado)                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = DbConfig.getConnection();
+                PreparedStatement ps = connection.prepareStatement(query)) {
+            
+            ps.setInt(1, id);
+            ps.setString(2, titulo);
+            ps.setString(3, descripcion);
+            ps.setInt(4, idEncargado);
+            ps.setString(5, prioridad);
+            ps.setString(6, tiempoEstimado);
+            ps.setString(7, comentarios);
+            ps.setString(8, estado);
+            
+            int result = ps.executeUpdate();
+            return result > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     public EncargadoDTO findEncargado(int id) throws SQLException {
         String query = "SELECT * FROM encargados WHERE id = " + id;
         try (Connection connection = DbConfig.getConnection();

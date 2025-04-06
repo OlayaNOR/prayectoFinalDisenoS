@@ -2,9 +2,11 @@ package service;
 
 import dto.EncargadoDTO;
 import dto.TareaDTO;
+import exception.InvalidTareaDataException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import repository.TareaRepository;
+import validator.TareaValidator;
 
 public class TareaService {
     
