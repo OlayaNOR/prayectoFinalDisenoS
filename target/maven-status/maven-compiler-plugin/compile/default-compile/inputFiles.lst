@@ -7,6 +7,7 @@ C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\controller\VentanaNuevaTareaAdmin.java
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\controller\VentanaCambioEstado.java
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\exception\InvalidTareaDataException.java
+C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\validator\NotificacionValidator.java
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\dto\NotificacionDTO.java
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\service\NotificacionService.java
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\exception\InvalidEncargadoDataException.java
@@ -16,6 +17,7 @@ C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\controller\VentanaGestionTareasAdmin.java
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\service\TareaService.java
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\validator\EncargadoValidator.java
+C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\exception\InvalidNotificacionDataException.java
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\controller\VentanaAdmin.java
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\controller\VentanaGestionTareasUsuario.java
 C:\Users\VALERIA\OneDrive\Desktop\ProyectoFinalDS\prayectoFinalDisenoS\src\main\java\dto\EncargadoDTO.java

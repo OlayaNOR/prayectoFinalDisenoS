@@ -5,6 +5,7 @@
 package controller;
 
 import dto.EncargadoDTO;
+import exception.InvalidNotificacionDataException;
 import exception.InvalidTareaDataException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -200,13 +201,14 @@ public class VentanaNuevaTareaAdmin extends javax.swing.JFrame {
             }
         
             if (tareaService.create(0, titulo, descripcion, idEncargado, prioridad, "", "", estado)) {
+                tareaService.createNotificacion(0, "¡Nueva tarea asignada! : " + titulo, idEncargado);
                 JOptionPane.showMessageDialog(null, "Tarea creada exitosamente.");
                 limpiarCampos();
             } else {
                 JOptionPane.showMessageDialog(null, "Algo salió mal.");
             }
   
-        }catch(SQLException | InvalidTareaDataException e) {
+        }catch(SQLException | InvalidTareaDataException | InvalidNotificacionDataException e) {
             e.getMessage();
         }
     }//GEN-LAST:event_btnCrearActionPerformed

@@ -209,6 +209,7 @@ public class VentanaCambioEstado extends javax.swing.JFrame {
 
     private void btnFinalizarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarTareaActionPerformed
         try{
+            tareaService.cambioEstado(tarea.getId());
             tareaService.reportePDF(tareaService.reporteIA(encargado.getId(), tarea), encargado.getId(), tarea);
 
             VentanaGestionTareasUsuario vgt = new VentanaGestionTareasUsuario(encargado);

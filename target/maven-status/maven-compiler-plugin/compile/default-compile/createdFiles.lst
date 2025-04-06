@@ -12,6 +12,7 @@ controller\VentanaGestionTareasUsuario$1.class
 controller\VentanaCambioEstado.class
 service\EncargadoService.class
 controller\VentanaNotificaciones$1.class
+validator\NotificacionValidator.class
 controller\VentanaGestionTareasAdmin$2.class
 controller\VentanaNuevaTareaAdmin$1.class
 exception\InvalidTareaDataException.class
@@ -44,6 +45,7 @@ controller\VentanaLogin$1.class
 controller\VentanaAdmin$1.class
 controller\VentanaLogin.class
 controller\VentanaGestionTareasUsuario$2.class
+exception\InvalidNotificacionDataException.class
 controller\VentanaUsuario.class
 controller\VentanaGestionTareasAdmin$4.class
 controller\VentanaNuevaTareaAdmin$2.class
